@@ -1,0 +1,45 @@
+require 'formula'
+
+class Ogre < Formula
+  homepage 'http://www.ogre3d.org/'
+  url 'https://sourceforge.net/projects/ogre/files/ogre/1.7/ogre_src_v1-7-4.tar.bz2/download'
+  version '1.7.4'
+  sha1 'e989b96eacc2c66f8cf8a19dae6cfd962a165207'
+
+  depends_on 'boost'
+  depends_on 'cmake' => :build
+  depends_on 'doxygen'
+  depends_on 'freeimage'
+  depends_on 'freetype'
+  depends_on 'libzzip'
+  depends_on 'tbb'
+
+  def patches
+    # https://gist.github.com/4237236
+    [
+      "https://gist.github.com/raw/4237236/31ae53cefdb693cb2fb81333178163a29f8cf7ca/osx_isystem.patch",
+      "https://gist.github.com/raw/4237236/9c7df6689da4e0b358429692f6615f2707469f45/osx_linking.patch",
+      "https://gist.github.com/raw/4237236/d667813d5ee1e712e0ea8cc99df9a85da6141b1e/replace_pbxcp_with_ditto.patch"
+    ]
+  end
+
+  def install
+    ENV.m64
+
+    cmake_args = [
+      "-DCMAKE_OSX_ARCHITECTURES='x86_64'",
+      "-DOGRE_BUILD_PLUGIN_CG=OFF"
+    ]
+    cmake_args.concat(std_cmake_args)
+    cmake_args << ".."
+
+    mkdir "build" do
+      system "cmake", *cmake_args
+      system "make install"
+    end
+  end
+
+  def test
+    system "false"
+  end
+end
