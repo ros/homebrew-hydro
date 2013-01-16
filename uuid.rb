@@ -1,6 +1,6 @@
 require 'formula'
 
-class OsspUuid < Formula
+class Uuid < Formula
   homepage 'http://www.ossp.org/pkg/lib/uuid/'
   url 'ftp://ftp.ossp.org/pkg/lib/uuid/uuid-1.6.2.tar.gz'
   mirror 'http://gnome-build-stage-1.googlecode.com/files/uuid-1.6.2.tar.gz'
