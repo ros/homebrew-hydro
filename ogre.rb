@@ -13,6 +13,7 @@ class Ogre < Formula
   depends_on 'freetype'
   depends_on 'libzzip'
   depends_on 'tbb'
+  depends_on :x11
 
   def patches
     # https://gist.github.com/4237236
