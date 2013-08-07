@@ -1,26 +1,14 @@
 require 'formula'
 
-class Gazebo < Formula
+class Sdformat < Formula
   homepage 'http://gazebosim.org'
-  url 'http://bitbucket.org/osrf/gazebo/get/34b5f338f3f12aa93030edf7fcf9def8f1a468e6.tar.bz2'
-  sha1 '974f91e2d367c35cd29c059241e80f299345cd62'
-  version '1.9.0'
+  url 'http://bitbucket.org/osrf/sdformat/get/52862f6b1db3663fd25c702b9a2226a50572b261.tar.bz2'
+  sha1 '7a05afa9e53ca4299ecfb4162ded2d533d04ef72'
+  version '1.4.5'
 
   depends_on 'boost'
   depends_on 'cmake'  => :build
-  depends_on 'doxygen'
-  depends_on 'freeimage'
-  depends_on 'libtar'
-  depends_on 'ogre'
-  depends_on 'pkg-config' => :build
-  depends_on 'protobuf'
-  depends_on 'protobuf-c'
-  depends_on 'qt'
-  depends_on 'tbb'
   depends_on 'tinyxml'
-  depends_on 'sdformat'
-
-  depends_on 'bullet' => [:optional, 'shared']
 
   def install
     ENV.m64
