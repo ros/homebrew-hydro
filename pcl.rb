@@ -16,6 +16,11 @@ class Pcl < Formula
 
   option 'with-debug', "Enable debug symbols"
 
+  bottle do
+    root_url 'http://download.ros.org/bottles'
+    sha1 '399bcdc8bf617c874af75cdc41ddd6625b2a90d5' => :mountain_lion
+  end
+
   def patches
     # Patch allows PCL to build without pcl_io enabled
     # See: https://github.com/PointCloudLibrary/pcl/issues/235
