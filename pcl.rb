@@ -18,13 +18,8 @@ class Pcl < Formula
 
   bottle do
     root_url 'http://download.ros.org/bottles'
-    sha1 '399bcdc8bf617c874af75cdc41ddd6625b2a90d5' => :mountain_lion
-  end
-
-  def patches
-    # Patch allows PCL to build without pcl_io enabled
-    # See: https://github.com/PointCloudLibrary/pcl/issues/235
-    DATA
+    revision 1
+    sha1 'f4547bff71a9cc32737df3f534c8071df605769e' => :mountain_lion
   end
 
   def install
@@ -33,8 +28,6 @@ class Pcl < Formula
     if build.with? 'debug'
       args << "-DCMAKE_BUILD_TYPE=Debug"
     end
-
-    args << "-DBUILD_io:BOOL=OFF"
 
     system "mkdir build"
     args << ".."
@@ -48,22 +41,3 @@ class Pcl < Formula
     system "bash -c 'echo | plyheader'"
   end
 end
-
-__END__
-diff --git a/surface/CMakeLists.txt b/surface/CMakeLists.txt
-index a5af191..1ed4009 100644
---- a/surface/CMakeLists.txt
-+++ b/surface/CMakeLists.txt
-@@ -154,7 +154,11 @@ if(build)
-     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${VTK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR})
-     link_directories(${VTK_LIBRARY_DIRS})
-     PCL_ADD_LIBRARY(${LIB_NAME} ${SUBSYS_NAME} ${srcs} ${incs} ${impl_incs} ${VTK_SMOOTHING_INCLUDES} ${POISSON_INCLUDES} ${OPENNURBS_INCLUDES} ${ON_NURBS_INCLUDES})
--    target_link_libraries(${LIB_NAME} pcl_common pcl_io pcl_search pcl_kdtree pcl_octree ${VTK_SMOOTHING_TARGET_LINK_LIBRARIES} ${ON_NURBS_LIBRARIES})
-+    if(${BUILD_io})
-+        target_link_libraries(${LIB_NAME} pcl_common pcl_io pcl_search pcl_kdtree pcl_octree ${VTK_SMOOTHING_TARGET_LINK_LIBRARIES} ${ON_NURBS_LIBRARIES})
-+    else()
-+        target_link_libraries(${LIB_NAME} pcl_common pcl_search pcl_kdtree pcl_octree ${VTK_SMOOTHING_TARGET_LINK_LIBRARIES} ${ON_NURBS_LIBRARIES})
-+    endif()
-     if(QHULL_FOUND)
-       target_link_libraries(${LIB_NAME} ${QHULL_LIBRARIES})
-     endif(QHULL_FOUND)
