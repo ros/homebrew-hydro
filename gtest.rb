@@ -6,7 +6,7 @@ class Gtest <Formula
   md5 '7e27f5f3b79dd1ce9092e159cdbd0635'
 
   def install
-    system "./configure", "--prefix=#{prefix}", "--disable-debug", "--disable-dependency-tracking"
+    system "./configure", "CPPFLAGS=-DGTEST_HAS_TR1_TUPLE=0", "--prefix=#{prefix}", "--disable-debug", "--disable-dependency-tracking"
     system "make install"
   end
 end
