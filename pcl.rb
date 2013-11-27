@@ -1,11 +1,11 @@
 require 'formula'
 
 class Pcl < Formula
-  homepage 'http://pointclouds.org/'
+  homepage 'http://www.pointclouds.org/'
   url 'https://github.com/PointCloudLibrary/pcl/archive/pcl-1.7.1.tar.gz'
   sha1 '784bce606141260423ea04f37b093f59d4c94c6a'
 
-  head 'https://github.com/PointCloudLibrary/pcl.git', :revision => 'b1edb0d9cad7f33122398f2bea5d6339358bed5a'
+  head 'https://github.com/PointCloudLibrary/pcl.git'
 
   depends_on 'cmake' => :build
   depends_on 'boost'
@@ -27,6 +27,14 @@ class Pcl < Formula
   end
 
   def install
+    # Currently 1.7.1 does not support clang and libc++
+    # but HEAD already has the necessary changes to support them
+    # so reuire HEAD on Mavericks until the next PCL release
+    raise <<-EOS.undent if MacOS.version == :mavericks and  ENV.compiler == :clang and not build.head?
+      On Mavericks, you must install pcl HEAD:
+        brew install pcl --HEAD
+      EOS
+
     args = std_cmake_parameters.split
 
     if build.with? 'debug'
