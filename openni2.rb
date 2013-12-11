@@ -5,6 +5,14 @@ class Openni2 < Formula
   url 'https://launchpad.net/~v-launchpad-jochen-sprickerhof-de/+archive/pcl/+files/openni2_2.1.0.4.orig.tar.gz'
   sha1 '8d423621f7c0c3a72b64fedf8ec5193f8e1341b5'
 
+  def patches
+    # fixes compilation on OS X with clang (e.g. 10.9)
+    # See https://github.com/ros/homebrew-hydro/issues/10
+    # This patch was introduced when openni2_2.1.0.4 was being built with this formula.
+    # Apparently the issue is addressed upstream. So when updating to the next release, consider removing the patch.
+    "https://gist.github.com/NikolausDemmel/7901983/raw/3746869662473860cd5f57e6bc685e76cdb831c2/equiv-is-a-thing-for-clang-apparently.patch"
+  end
+
   def install
     # Change the default location of drive libraries to a sane default
     inreplace 'Source/Core/OniContext.cpp',
