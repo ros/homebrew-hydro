@@ -13,6 +13,7 @@ class Gtest <Formula
 
   def install
     system "./configure", "CPPFLAGS=-DGTEST_HAS_TR1_TUPLE=0", "--prefix=#{prefix}", "--disable-debug", "--disable-dependency-tracking"
+    inreplace 'scripts/gtest-config', '`dirname $0`', '$bindir'
     system "make install"
   end
 end
