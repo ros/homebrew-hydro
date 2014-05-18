@@ -13,6 +13,7 @@ class Gtest <Formula
 
   def install
     system "./configure", "CPPFLAGS=-DGTEST_HAS_TR1_TUPLE=0", "--prefix=#{prefix}", "--disable-debug", "--disable-dependency-tracking"
+    inreplace 'scripts/gtest-config', '`dirname $0`', '$bindir'
     system "make install"
   end
 end
@@ -52,7 +53,7 @@ index a2a62be..b4a8ac8 100644
 +#  include <tuple>
 +// C++11 puts its tuple into the ::std namespace rather than
 +// ::std::tr1.  gtest expects tuple to live in ::std::tr1, so put it there.
-++namespace std {
++namespace std {
 +    namespace tr1 {
 +        using ::std::get;
 +        using ::std::make_tuple;
