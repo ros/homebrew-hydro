@@ -1,11 +1,16 @@
 require 'formula'
 
+# Note: The reason for providing our own gfortran is that upstream
+#       homebrew merged gfortran with gcc, gcc has causes issues with
+#       the default c/c++ compiler and is thus keg-only. If this
+#       situation ever changes, we can remove gfortran from our tap.
 class Gfortran < Formula
   homepage 'http://gcc.gnu.org/wiki/GFortran'
   url 'http://ftpmirror.gnu.org/gcc/gcc-4.8.2/gcc-4.8.2.tar.bz2'
   mirror 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.2/gcc-4.8.2.tar.bz2'
   sha1 '810fb70bd721e1d9f446b6503afe0a9088b62986'
 
+  # Note: We need to remove these bottles if we ever change this formula.
   bottle do
     revision 1
     sha1 'b0e7a0c7b6b0472b6cea9e73b2312df48f7c6c82' => :mavericks
@@ -119,8 +124,19 @@ class Gfortran < Formula
   end
 
   def caveats; <<-EOS.undent
-    Formulae that require a Fortran compiler should use:
+    This formula had been removed and merged with the gcc formula in
+    upstream homebrew. However, installing gcc causes potential
+    conflicts with the default c/c++ compiler (see
+    https://github.com/ros-infrastructure/rosdep/issues/328) and
+    therefore gcc is keg-only. Thus, the ros tap provides a copy of
+    the old standalone (not keg-only) gfortran formula needed outside of
+    homebrew for python packages like scipy.
+
+    Formulae that require a Fortran compiler should use
       depends_on :fortran
+    which will resolve to the gfortran of the (keg-only) gcc formula and
+    do the right thing even for future changes in the way homebrew
+    provides gfortran.
     EOS
   end
 end
