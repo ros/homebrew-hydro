@@ -5,6 +5,9 @@ class Openni2 < Formula
   url 'https://launchpad.net/~v-launchpad-jochen-sprickerhof-de/+archive/pcl/+files/openni2_2.1.0.4.orig.tar.gz'
   sha1 '8d423621f7c0c3a72b64fedf8ec5193f8e1341b5'
 
+  depends_on 'pkg-config' => :build
+  depends_on 'libusb'
+
   def patches
     # fixes compilation on OS X with clang (e.g. 10.9)
     # See https://github.com/ros/homebrew-hydro/issues/10
