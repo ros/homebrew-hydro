@@ -3,7 +3,7 @@ require 'formula'
 class Gtest <Formula
   url 'http://googletest.googlecode.com/files/gtest-1.5.0.tar.gz'
   homepage 'http://code.google.com/p/googletest/'
-  md5 '7e27f5f3b79dd1ce9092e159cdbd0635'
+  sha256 '24156a23cfa49a194c48d1b630fd8eaa63fffc403719b5ddb94cdbe8d9a96aff'
 
   def patches
       # This is necessary to get gtest to function wtih libc++
